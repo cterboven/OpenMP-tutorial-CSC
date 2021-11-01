@@ -9,7 +9,8 @@
 #include <sys/times.h>
 
 #include <math.h>
-#include <mkl.h>
+#include <blis/cblas.h>
+#include <lapacke.h>
 
 #include "omp.h"
 
@@ -72,7 +73,7 @@ float get_time()
 }
 
 // Robust Check the factorization of the matrix A2
-// Using directly Fortran services: dlacpy_, dtrmm, dlange_
+// Using directly Fortran services: dlacpy_, dtrmm_, dlange_
 static int check_factorization(int N, double *A1, double *A2, int LDA, char uplo, double eps)
 {
 #ifdef VERBOSE
@@ -96,11 +97,11 @@ static int check_factorization(int N, double *A1, double *A2, int LDA, char uplo
 	if (uplo == 'U'){
 		dlacpy_(&UP, &N, &N, A2, &LDA, L1, &N);
 		dlacpy_(&UP, &N, &N, A2, &LDA, L2, &N);
-		dtrmm(&LO, &uplo, &TR, &NU, &N, &N, &alpha, L1, &N, L2, &N);
+		dtrmm_(&LO, &uplo, &TR, &NU, &N, &N, &alpha, L1, &N, L2, &N);
 	} else{
 		dlacpy_(&LO, &N, &N, A2, &LDA, L1, &N);
 		dlacpy_(&LO, &N, &N, A2, &LDA, L2, &N);
-		dtrmm(&RI, &LO, &TR, &NU, &N, &N, &alpha, L1, &N, L2, &N);
+		dtrmm_(&RI, &LO, &TR, &NU, &N, &N, &alpha, L1, &N, L2, &N);
 	}
 
 	/* Compute the Residual || A -L'L|| */

@@ -1,11 +1,9 @@
 BIN_DIR=../bin
 PROGRAM=$(BIN_DIR)/cholesky-tsk
 
-MKL_HOME=$(MKLROOT)
-
 CC=gcc
-CFLAGS=-O3 -std=gnu99 -I$(MKL_HOME)/include -fopenmp
-LDFLAGS=-L$(MKL_HOME)/lib/intel64 -lmkl_sequential -lmkl_core -lmkl_rt -lpthread -lm -fopenmp
+CFLAGS=-O3 -std=gnu99 -I$(AMDBLIS_INSTALL_ROOT)/include -I$(AMDLIBFLAME_INSTALL_ROOT)/include -fopenmp
+LDFLAGS=-L$(AMDBLIS_INSTALL_ROOT)/lib -L$(AMDLIBFLAME_INSTALL_ROOT)/lib -lblis-mt -lflame -llapacke -lm -fopenmp
 VERBOSE=-DVERBOSE
 
 all: $(PROGRAM) 
