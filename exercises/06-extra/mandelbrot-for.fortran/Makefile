@@ -10,7 +10,7 @@ LDFLAGS=-lm -fopenmp
 
 all: $(PROGRAM) 
 
-$(PROGRAM): mandelbrot.f90 lodepng.o
+$(PROGRAM): mandelbrot.f90 lodepng.o lodepng_wrapper.o
 	$(FC) $(FFLAGS) $(VERBOSE) -o $@ $^ $(LDFLAGS)
 
 lodepng.o:lib/lodepng.c
