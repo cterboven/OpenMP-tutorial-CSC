@@ -2,20 +2,16 @@ BIN_DIR=../bin.fortran
 PROGRAM=$(BIN_DIR)/quicksort.fortran
 
 FC=gfortran
-FFLAGS=-c -O3 -fopenmp 
+FFLAGS=-O3 -fopenmp 
 LDFLAGS=-fopenmp
 
 all: $(PROGRAM) 
 
-$(PROGRAM): quicksort.f90
+$(PROGRAM): quicksort.o
 	$(FC) $(FFLAGS) -o $@ $^ $(LDFLAGS)
 
 %.o: %.f90
-	$(FC) $(FFLAGS) -o $@ $^ 
-
-sudoku.cpp:
-	@cat README.md 
-	@false
+	$(FC) $(FFLAGS) -c -o $@ $^ 
 
 $(BIN_DIR): 
 	mkdir $@
