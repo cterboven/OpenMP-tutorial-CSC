@@ -1,0 +1,8 @@
+*.bak
+*~
+*.swp
+
+stream.clang
+stream.clang-nts
+stream.icc-nts
+stream.icc
